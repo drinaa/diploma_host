@@ -1,0 +1,1 @@
+web: gunicorn diploma_host.wsgi --log-file -
