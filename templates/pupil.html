@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+
+{% block title %}Портфолио ученика{% endblock %}
+
+{% block content %}
+    <div class="wrapper_all">
+        <div class="wrapper_title_lk">
+            <p class="title_lk">Моё портфолио {% if request.session.grade %}за {{ request.session.grade }} класс{% endif %}</p>
+        </div>
+        <div class="wrapper_add_button">
+            <a class="popup_olimp_open" href="#">
+                <button class="add_button" onclick="open_olimp()">+ Добавить участие в олимпиаде</button>
+            </a>
+            <a class="popup_project_open" href="#">
+                <button class="add_button">+ Добавить проект, очно-заочную школу</button>
+            </a>
+            <a class="popup_sport_open" href="#">
+                <button class="add_button">+ Добавить участие в спортивном конкурсе</button>
+            </a>
+            <a class="popup_tvor_open" href="#">
+                <button class="add_button">+ Добавить участие в творческом конкурсе</button>
+            </a>
+        </div>
+
+        <div class="wrapper_grade_button">
+            <div id="grades_list"></div>
+            <script>
+                for (let i = 1; i <= 11; i++) {
+                    let new_link = document.createElement('a');
+                    //let new_button = document.createElement('button');
+                    new_link.href = "{% url 'show_grade' %}?grade="+i.toString();
+                    //new_button.value = i.toString();
+                    new_link.className = "grade_buttons";
+                    new_link.innerText = i.toString();
+                    document.getElementById("grades_list").append(new_link);
+                }
+            </script>
+
+        </div>
+        <div class="select_nomin_wrapper">
+            <form id="form_select_nomin_pup" method="post" action="{% url 'show_nomin' %}">
+                {% csrf_token %}
+                <table id="show_nom">
+                    <tr>
+                        <td style="font-size: 22px;">Выбрать номинацию:</td>
+                        <td><span style="padding: 0px 5px;">&nbsp;</span><select name='nomination'
+                                                                                 style="font-size: 20px; font-family: 'Open Sans Condensed';">
+                            <option value="" selected>Все</option>
+                            <option value="интеллектуальная">Интеллектуальная</option>
+                            <option value="творческая">Творческая</option>
+                            <option value="спортивная">Спортивная</option>
+                        </select></td>
+                        <td>
+                            <div>
+                                <input type="submit" value="Показать" class="select_nomin_button">
+                                <input type="hidden" name="next" value="{{ next }}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="diplomas_table">
+            <table class='tab_pup_dipl'>
+                <tr>
+                    <th style='width: 15%;'>Год участия</th>
+                    <th style='width: 65%;'>Название</th>
+                    <th style='width: 10%;'>Балл</th>
+                    <th style='width: 10%;'>Удалить запись</th>
+                </tr>
+                {% for diploma in diplomas %}
+                    <tr>
+                        <td>{{ diploma.year }}</td>
+                        <td>{{ diploma.name }}</td>
+                        <td>{{ diploma.point}}</td>
+                        <td><input type='checkbox' name='delete_row[]'></td>
+                    </tr>
+                {% endfor %}
+            {% if request.session.nomin != "" %}
+                <tr>
+                    <td colspan="2" style="border: none; text-align:left; padding-left: 5%; line-height: 50px; font-size: 25px;">Сумма баллов в номинации "{{ nomination }}": </td>
+                    <td  style="border: none; font-size: 25px; color: #ff0000;">{{ sum_points }}</td>
+                    <td style="border: none"></td>
+                </tr>
+            {% endif %}
+            </table>
+        </div>
+    </div>
+    <div class="popup-fade">
+        <div class="popup">
+            <div class="add_form_wrapper"><p class="add_form_header">Добавить новый диплом</p></div>
+            <a class="popup-close" href="#">Закрыть</a>
+            <div class="popup_olimp">
+                <form class="add_form" method="post" action="{% url 'add_diploma' %}">
+                    {% csrf_token %}
+                    <p class="form_head_name">Название мероприятия:</p>
+                    <textarea class="input_name" required name="add_descrip"></textarea> <br>
+                    <p class="form_head">Уровень мероприятия:</p>
+                    <input type="radio" id="olimp_level-1" checked name="add_level" value="0"><label for="olimp_level-1">муниципальный/городской</label><br>
+                    <input type="radio" id="olimp_level-2" name="add_level" value="1"><label for="olimp_level-2">регион/область</label><br>
+                    <input type="radio" id="olimp_level-3" name="add_level" value="2"><label for="olimp_level-3">российский/федеральный/международный</label>
+                    <p class="form_head">Результат участия:</p>
+                    <input type="radio" id="olimp_place-1" checked name="add_place" value="0"><label for="olimp_place-1">участник</label><br>
+                    <input type="radio" id="olimp_place-2" name="add_place" value="1"><label for="olimp_place-2">призёр</label><br>
+                    <input type="radio" id="olimp_place-3" name="add_place" value="2"><label for="olimp_place-3">победитель</label>
+                    <p class="form_head">Участие:</p>
+                    <input type="radio" id="olimp_part1-1" checked name="add_part1" value="1"><label for="olimp_part1-1">очно<span
+                        style="padding: 0px 5px;">&nbsp;</span></label>
+                    <input type="radio" id="olimp_part1-2" name="add_part1" value="0"><label for="olimp_part1-2">заочно</label><br>
+                    <input type="radio" id="olimp_part2-1" checked name="add_part2" value="0"><label for="olimp_part2-1">личное</label>
+                    <input type="radio" id="olimp_part2-2" name="add_part2" value="1"><label for="olimp_part2-2">командное</label>
+                    <p class="error_message">{{ error }}</p>
+                    <div id="reg_buttons">
+                        <input type="submit" value="Добавить" class="add_form_button" name="olimp">
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                        <input type="reset" value="Сбросить" class="add_form_button">
+                    </div>
+                </form>
+            </div>
+            <div class="popup_project">
+                <form class="add_form" method="post" action="{% url 'add_diploma' %}">
+                    {% csrf_token %}
+                    <p class="form_head_name">Название мероприятия:</p>
+                    <textarea class="input_name" required name="add_descrip"></textarea> <br>
+                    <p class="form_head">Номинация:</p>
+                    <input type="radio" id="nomin-1" checked name="add_nomin" value="интеллектуальная"><label for="nomin-1">интеллектуальная</label><br>
+                    <input type="radio" id="nomin-2" name="add_nomin" value="спортивная"><label for="nomin-2">спортивная</label><br>
+                    <input type="radio" id="nomin-3" name="add_nomin" value="творческая"><label for="nomin-3">творческая</label>
+                    <p class="form_head">Уровень мероприятия:</p>
+                    <input type="radio" id="project_level-1" checked name="add_level" value="0"><label for="project_level-1">муниципальный/городской</label><br>
+                    <input type="radio" id="project_level-2" name="add_level" value="1"><label for="project_level-2">регион/область</label><br>
+                    <input type="radio" id="project_level-3" name="add_level" value="2"><label for="project_level-3">очно-заочные школы при ВУЗах</label><br>
+                    <input type="radio" id="project_level-4" name="add_level" value="3"><label for="project_level-4">российский/федеральный/международный</label>
+                    <p class="form_head">Участие:</p>
+                    <input type="radio" id="project_part1-1" checked name="add_part1" value="1"><label for="project_part1-1">очно<span
+                        style="padding: 0px 5px;">&nbsp;</span></label>
+                    <input type="radio" id="project_part1-2" name="add_part1" value="0"><label for="project_part1-2">заочно</label>
+                    <p class="error_message">{{ error }}</p>
+                    <div id="reg_buttons">
+                        <input type="submit" value="Добавить" class="add_form_button" name="project">
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                        <input type="reset" value="Сбросить" class="add_form_button">
+                    </div>
+                </form>
+            </div>
+            <div class="popup_sport">
+                <form class="add_form" method="post" action="{% url 'add_diploma' %}">
+                    {% csrf_token %}
+                    <p class="form_head_name">Название мероприятия:</p>
+                    <textarea class="input_name" required name="add_descrip"></textarea> <br>
+                    <p class="form_head">Уровень мероприятия:</p>
+                    <input type="radio" id="sport_level-0" checked name="add_level" value="0"><label for="sport_level-0">школьный</label><br>
+                    <input type="radio" id="sport_level-1" name="add_level" value="1"><label for="sport_level-1">муниципальный/городской</label><br>
+                    <input type="radio" id="sport_level-2" name="add_level" value="2"><label for="sport_level-2">регион/область</label><br>
+                    <input type="radio" id="sport_level-3" name="add_level" value="3"><label for="sport_level-3">российский/федеральный</label>
+                    <input type="radio" id="sport_level-4" name="add_level" value="4"><label for="sport_level-4">международный</label>
+                    <p class="form_head">Результат участия:</p>
+                    <input type="radio" id="sport_place-1" checked name="add_place" value="0"><label for="sport_place-1">участник</label><br>
+                    <input type="radio" id="sport_place-2" name="add_place" value="1"><label for="sport_place-2">призёр</label><br>
+                    <input type="radio" id="sport_place-3" name="add_place" value="2"><label for="sport_place-3">победитель</label>
+                    <p class="form_head">Участие:</p>
+                    <input type="radio" id="sport_part1-1" checked name="add_part1" value="1"><label for="sport_part1-1">очно<span style="padding: 0px 5px;">&nbsp;</span></label>
+                    <input type="radio" id="sport_part1-2" name="add_part1" value="0"><label for="sport_part1-2">заочно</label><br>
+                    <input type="radio" id="sport_part2-1" checked name="add_part2" value="0"><label for="sport_part2-1">личное</label>
+                    <input type="radio" id="sport_part2-2" name="add_part2" value="1"><label for="sport_part2-2">командное</label>
+                    <p class="error_message">{{ error }}</p>
+                    <div>
+                        <input type="submit" value="Добавить" class="add_form_button" name="sport">
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                        <input type="reset" value="Сбросить" class="add_form_button">
+                    </div>
+                </form>
+            </div>
+            <div class="popup_tvor">
+                <form class="add_form" method="post" action="{% url 'add_diploma' %}">
+                    {% csrf_token %}
+                    <p class="form_head_name">Название мероприятия:</p>
+                    <textarea class="input_name" required name="add_descrip"></textarea> <br>
+                    <p class="form_head">Уровень мероприятия:</p>
+                    <input type="radio" id="tvor_level-0" checked name="add_level" value="0"><label
+                        for="tvor_level-0">школьный</label><br>
+                    <input type="radio" id="tvor_level-1" name="add_level" value="1"><label for="tvor_level-1">муниципальный/городской</label><br>
+                    <input type="radio" id="tvor_level-2" name="add_level" value="2"><label
+                        for="tvor_level-2">регион/область</label><br>
+                    <input type="radio" id="tvor_level-3" name="add_level" value="3"><label for="tvor_level-3">российский/федеральный</label>
+                    <input type="radio" id="tvor_level-4" name="add_level" value="4"><label
+                        for="tvor_level-4">международный</label>
+                    <p class="form_head">Результат участия:</p>
+                    <input type="radio" id="tvor_place-1" checked name="add_place" value="0"><label
+                        for="tvor_place-1">участник</label><br>
+                    <input type="radio" id="tvor_place-2" name="add_place" value="1"><label for="tvor_place-2">призёр</label><br>
+                    <input type="radio" id="tvor_place-3" name="add_place" value="2"><label for="tvor_place-3">победитель</label>
+                    <p class="form_head">Участие:</p>
+                    <input type="radio" id="tvor_part1-1" checked name="add_part1" value="1"><label for="tvor_part1-1">очно<span
+                        style="padding: 0px 5px;">&nbsp;</span></label>
+                    <input type="radio" id="tvor_part1-2" name="add_part1" value="0"><label for="tvor_part1-2">заочно</label><br>
+                    <input type="radio" id="tvor_part2-1" checked name="add_part2" value="0"><label
+                        for="tvor_part2-1">личное</label>
+                    <input type="radio" id="tvor_part2-2" name="add_part2" value="1"><label for="tvor_part2-2">командное</label>
+                    <p class="error_message">{{ error }}</p>
+                    <div id="reg_buttons">
+                        <input type="submit" value="Добавить" class="add_form_button" name="tvor">
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                        <input type="reset" value="Сбросить" class="add_form_button">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="https://yandex.st/jquery/2.1.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function ($) {
+                $('.popup_olimp_open').click(function () {
+                    $('.popup-fade').fadeIn();
+                    $('.popup_olimp').fadeIn();
+                    $('.popup_project').fadeOut(1);
+                    $('.popup_sport').fadeOut(1);
+                    $('.popup_tvor').fadeOut(1);
+                    return false;
+                });
+                $('.popup_project_open').click(function () {
+                    $('.popup-fade').fadeIn();
+                    $('.popup_olimp').fadeOut(1);
+                    $('.popup_project').fadeIn();
+                    $('.popup_sport').fadeOut(1);
+                    $('.popup_tvor').fadeOut(1);
+                    return false;
+                });
+                $('.popup_sport_open').click(function () {
+                    $('.popup-fade').fadeIn();
+                    $('.popup_olimp').fadeOut(1);
+                    $('.popup_project').fadeOut(1);
+                    $('.popup_sport').fadeIn();
+                    $('.popup_tvor').fadeOut(1);
+                    return false;
+                });
+                $('.popup_tvor_open').click(function () {
+                    $('.popup-fade').fadeIn();
+                    $('.popup_olimp').fadeOut(1);
+                    $('.popup_project').fadeOut(1);
+                    $('.popup_sport').fadeOut(1);
+                    $('.popup_tvor').fadeIn();
+                    return false;
+                });
+
+                $('.popup-close').click(function () {
+                    $(this).parents('.popup-fade').fadeOut();
+                    return false;
+                });
+
+                $(document).keydown(function (e) {
+                    if (e.keyCode === 27) {
+                        e.stopPropagation();
+                        $('.popup-fade').fadeOut();
+                    }
+                });
+
+                $('.popup-fade').click(function (e) {
+                    if ($(e.target).closest('.popup').length == 0) {
+                        $(this).fadeOut();
+                    }
+                });
+            });
+        </script>
+{% endblock %}

@@ -1,0 +1,148 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+#login_back{
+	background-image: url("../images/background.png");
+	height: 800px;
+
+}
+
+#footer{
+	margin-top: 0;
+}
+
+#reg_back{
+    width:100%;
+	height: 100%;
+	background-repeat: repeat-x;
+}
+.back_fade:before{
+    content: '';
+	background: #000;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.7;
+	z-index: 9999;
+}
+.modal_reg{
+    position: fixed;
+    top:20%;
+    margin-left: 26%;
+	padding: 20px;
+	width: 46%;
+    min-width: 200px;
+    height: 40%;
+	background: #fff;
+	border: 1px solid orange;
+	border-radius: 4px;
+	z-index: 99999;
+	opacity: 1;
+}
+.head_text{
+	font-family: "Open Sans Condensed";
+	font-size: 40px;
+	text-align: center;
+	background-color: white;
+	font-weight: normal;
+}
+#form_reg{
+	width: 75%;
+	margin: auto;
+}
+.input_reg{
+	font-family: "Open Sans Condensed";
+	font-size: 25px;
+	width: 100%;
+	height: 45px;
+	border: 1.5px solid #F5690C;
+	border-radius: 4px;
+	margin: 20px 0;
+}
+.reg_button{
+	background-color: #F5690C;
+	box-shadow: 0.3em 0.3em 5px rgba(122,122,122,0.5);
+	border-radius: 15px;
+	width: 100px;
+	height: 2em;
+	min-width: 70px;
+	outline: none;
+	border: none;
+	font-family: "Open Sans Condensed";
+	color: white;
+	font-size: 20px;
+	letter-spacing: 2px;
+}
+#reg_buttons{
+	display: flex;
+	justify-content: space-around;
+	flex-direction: row;
+
+}
+
+.input_reg{
+	font-family: "Open Sans Condensed";
+	font-size: 25px;
+	width: 100%;
+	height: 45px;
+	border: 1.5px solid #F5690C;
+	border-radius: 4px;
+	margin: 20px 0;
+}
+
+.error_message {
+	color: red;
+}
+
+@media (min-height: 600px) and (max-width: 500px) {
+	.modal_reg{
+		width: 95%;
+		margin: 0;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+}

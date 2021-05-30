@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Новоуральская Гимназия{% endblock %}
+
+{% block link %}<link rel="stylesheet" href="{% static "css/login.css" %}"> {% endblock %}
+
+
+{% block content %}
+    <div id="login_back"></div>
+    <div class="back_fade">
+        <div class="modal_reg">
+            <h1 class="head_text">Вход в личный кабинет</h1>
+            <form id="form_reg" method="post" action="{% url 'login_page' %}">
+                {% csrf_token %}
+                <input type="text" name="username" id="user_login" placeholder="Имя пользователя" class="input_reg">{{ form.login }}<br>
+                <input type="password" name="password" id="id_password" placeholder="Пароль" class="input_reg" required>{{ form.passw }}<br>
+                <p class="error_message">{{ error }}</p>
+                <div id="reg_buttons">
+                    <input type="submit" value="Войти" class="reg_button">
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    <input type="reset" value="Сбросить" class="reg_button">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

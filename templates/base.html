@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+    <link href="{% static "css/adapt.css" %}" rel="stylesheet">
+    <link>{% block link %}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<body>
+<div id="header_content">
+    <div id="AbsoluteTop">
+        <div class="header-table">
+            <div class="header-row">
+                <div class="header-cell">
+                    <table class="header-table-title-fluid">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="logo">
+                                    <a href="/"><img src="{% static "images/logo.png" %}" alt="Гимназия"/></a>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="title">
+                                    <div class="tpltitle"><strong>Муниципальное автономное общеобразовательное
+                                        учреждение «Гимназия» </strong></div>
+                                    <div class="tplsubtitle"><strong>Новоуральского городского округа</strong></div>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="adress-block">
+                                    <table itemscope itemtype="http://schema.org/Organization" class="adress">
+                                        <thead>
+                                        <tr>
+                                            <th><i class="fa fa-map-marker"></i></th>
+
+                                            <th>г. Новоуральск, Юбилейная 7</th>
+                                        </tr>
+                                        <tr>
+                                            <th><i class="fa fa-phone"></i></th>
+                                            <th>+7(34370) 3-01-70</th>
+                                        </tr>
+                                        <tr>
+                                            <th><i class="fa fa-envelope-square"></i></th>
+                                            <th><a href="mailto:gimn47@rambler.ru">gimn47@rambler.ru</a></th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="st-nav-menu-section-menu1">
+        <div class="st-nav-menu-module">
+            <ul class="st-nav-menu">
+                <li class="item-101 default parent"><a href="#">Главная</a></li>
+                <li class="item-112 deeper parent"><a href="#" class="noactive">Сведения об образовательной
+                    организации</a></li>
+                <li class="item-113 deeper parent"><a href="#">Ученикам</a></li>
+                <li class="item-114 deeper parent"><a href="#">Родителям</a></li>
+                <li class="item-190 deeper parent"><a href="#">Достижения</a></li>
+                <li class="item-191 deeper parent"><a href="#">Школьная жизнь</a></li>
+                <li class="item-191 deeper current active"><a href="/" class="dark">Портфолио</a></li>
+                {% if user.is_authenticated %}
+                    <li class="item-191 deeper parent"><a href="{% url 'logout' %}">Выйти</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </section>
+    <div id="content" style="min-height: 300px">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+<div id="footer">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="menuBottom span4">
+                <div class="moduletable">
+                    <h3>Нижнее меню</h3>
+                    <ul class="nav menu">
+                        <li class="item-129"><a href="#" class="maps">Карта сайта</a></li>
+                        <li class="item-131"><a href="#" class="trek">Схема проезда</a></li>
+                        <li class="item-132"><a href="#" class="time">Время работы</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="menuBottom span4">
+                <div class="moduletable">
+                    <h3>Условия использования</h3>
+
+
+                    <div class="custom">
+                        <p>При использовании материалов сайта ссылка на источник обязательна.</p></div>
+                </div>
+
+            </div>
+            <div class="menuBottom span4">
+                <div class="moduletable">
+                    <h3>Кто на сайте</h3>
+                    <p>Сейчас на сайте 202&#160;гостя и нет пользователей</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="debug">
+    <div class="container">
+        © 2021. МАОУ "Гимназия" Все персональные данные размещены с согласия субъекта(ов) на обработку персональных
+        данных.
+        <br/>
+    </div>
+</div>
+</body>
+</html>

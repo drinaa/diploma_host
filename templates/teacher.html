@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Просмотр портфолио{% endblock %}
+
+{% block content %}
+
+    <div class="wrapper_all">
+        <div class="wrapper_title_lk">
+            <p class="title_lk">Портфолио учеников</p>
+        </div>
+        <div class="select_teacher">
+            <form id="form_select_nomin_teach" method="post" action="{% url 'teacher' %}">
+                {% csrf_token %}
+                <table id="teacher_report_online">
+                    <tr>
+                        <th>Год участия</th>
+                        <th>Номинация</th>
+                        <th>Класс</th>
+                    </tr>
+                    <tr>
+                        <td><select name="teach_year" id="teach_year">
+                            <option value="" selected>Все</option>
+                            <script>
+                                let date = new Date;
+                                let year = date.getFullYear();
+                                for (let i = year - 11; i <= year; i++) {
+                                    let new_option = document.createElement('option');
+                                    new_option.value = i.toString();
+                                    new_option.innerHTML = i.toString();
+                                    document.getElementById("teach_year").append(new_option);
+                                }
+                            </script>
+                        </select></td>
+                        <td><select name="teach_nomin">
+                            <option value="" selected>Все</option>
+                            <option value="интеллектуальная">Интеллектуальная</option>
+                            <option value="спортивная">Спортивная</option>
+                            <option value="творческая">Творческая</option>
+                        </select><span style="padding: 0px 5px;">&nbsp;</span></td>
+                        <td><select name="teach_grade" id="teach_grade">
+                            <option value="" selected>Все</option>
+                            <script>
+                                for (let i = 1; i <= 11; i++) {
+                                    let new_option = document.createElement('option');
+                                    new_option.value = i.toString();
+                                    new_option.innerHTML = i.toString();
+                                    document.getElementById("teach_grade").append(new_option);
+                                }
+                            </script>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><input type="submit" value="Показать" class="select_nomin_button" name="show_portfolio_teach">
+                    </tr>
+                </table>
+            </form>
+            <div class="diplomas_table">
+                <table class='tab_pup_dipl'>
+                    <tr>
+                        <th style='width: 35%;'>Фамилия, имя</th>
+                        <th style='width: 10%;'>Класс</th>
+                        <th style='width: 10%;'>Год</th>
+                        <th style='width: 35%;'>Номинация</th>
+                        <th style='width: 10%;'>Балл</th>
+                    </tr>
+                    {% for portfolio in portfolios %}
+                        <tr>
+                            <td>{{ portfolio.last_name }} {{ portfolio.first_name }}</td>
+                            <td>{{ portfolio.grade }}</td>
+                            <td>{{ portfolio.year }}</td>
+                            <td>{{ portfolio.nomination }}</td>
+                            <td>{{ portfolio.points }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <form action='create_report' method='POST' class="report_year_form" action="{% url 'create_report' %}">
+                {% csrf_token %}
+                <span style="font-size: 20px; padding: 0px 5px;">Выберите год: &nbsp;</span>
+                <select name="report_year" id="report_year">
+                    <script>
+                        let date_j = new Date;
+                        let year_j = date_j.getFullYear();
+                        for (let j = year - 11; j <= year; j++) {
+                            let new_option = document.createElement('option');
+                            new_option.value = j.toString();
+                            new_option.innerHTML = j.toString();
+                            document.getElementById("report_year").append(new_option);
+                        }
+                    </script>
+                </select>
+                <input type='submit' name='create_report' value='Создать список номинантов' class="select_nomin_button">
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
