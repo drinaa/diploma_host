@@ -28,6 +28,7 @@ urlpatterns = [
     path('portfolio/logout/', auth_views.LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     url(r'^show_grade$', views.show_grade, name='show_grade'),
     url(r'^show_nomin$', views.show_nomin, name='show_nomin'),
+    url(r'^delete_diplomas$', views.delete_diplomas, name='delete_diplomas'),
     #url(r'^show_portfolio_teach$', views.show_portfolio_teach, name='show_portfolio_teach'),
     url(r'create_report$', views.create_report, name='create_report'),
     path('', views.index, name='index'),
