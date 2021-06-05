@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'diploma.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'portfolio_db',
-        'USER': 'root',
-        'PASSWORD': 'vertrigo',
-        'HOST': 'localhost',
+        'NAME': 'heroku_c090b3388d887dc',
+        'USER': 'b6061909a7976f',
+        'PASSWORD': '3b1a4bf5',
+        'HOST': 'us-cdbr-east-04.cleardb.com',
     }
 }
 
