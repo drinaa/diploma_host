@@ -41,24 +41,20 @@
         <div class="select_nomin_wrapper">
             <form id="form_select_nomin_pup" method="post" action="{% url 'show_nomin' %}">
                 {% csrf_token %}
-                <table id="show_nom">
-                    <tr>
-                        <td style="font-size: 22px;">Выбрать номинацию:</td>
-                        <td><span style="padding: 0px 5px;">&nbsp;</span><select name='nomination'
+                <div id="show_nom">
+                        <p style="font-size: 22px;">Выбрать номинацию:</p>
+                        <div><span style="padding: 0px 5px;">&nbsp;</span><select name='nomination'
                                                                                  style="font-size: 20px; font-family: 'Open Sans Condensed';">
                             <option value="" selected>Все</option>
                             <option value="интеллектуальная">Интеллектуальная</option>
                             <option value="творческая">Творческая</option>
                             <option value="спортивная">Спортивная</option>
-                        </select></td>
-                        <td>
+                        </select></div>
                             <div>
                                 <input type="submit" value="Показать" class="select_nomin_button">
                                 <input type="hidden" name="next" value="{{ next }}"/>
                             </div>
-                        </td>
-                    </tr>
-                </table>
+                </div>
             </form>
         </div>
         <div class="diplomas_table">
