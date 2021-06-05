@@ -140,6 +140,5 @@ LOGIN_URL = 'login_page'
 LOGOUT_REDIRECT_URL = 'index'
 
 
-import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+
 
