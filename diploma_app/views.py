@@ -151,7 +151,7 @@ def create_report(request):
 
     for i in range (1,12):
         par = doc.add_heading('{i} класс'.format(i=i))
-        table = doc.add_table(rows=18, cols=2)
+        table = doc.add_table(rows=3, cols=2)
         table.style = 'Table Grid'
         j = 0
         for nomin in list_nomination:
@@ -160,6 +160,7 @@ def create_report(request):
             a = table.cell(j, 0).merge(table.cell(j,1))
             j += 1
             for elem in data:
+                table.add_row()
                 last_name = pupil.objects.get(id=elem["pupil_id"]).last_name
                 first_name = pupil.objects.get(id=elem["pupil_id"]).first_name
                 table.cell(j,0).text = last_name + ' ' + first_name
@@ -185,6 +186,8 @@ def create_report(request):
     # pdf.set_font("Arial", size=12)
     # pdf.cell(200, 10, txt="Welcome to Python!", ln=1, align="C")
     # pdf.output("simple_demo.pdf")
+
+    return redirect("../teacher")
 
 def delete_diplomas(request):
     elems_arr = request.POST.getlist('delete_row')
