@@ -27,7 +27,7 @@ SECRET_KEY = 'kjw^d3#8)=3+x(xld$t2&y28)g67y8zuetfnvvr*bs=q_3d7k7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -143,6 +143,6 @@ LOGOUT_REDIRECT_URL = 'index'
 django_heroku.settings(locals())
 
 import dj_database_url
-prod_db  =  dj_database_url.config(conn_max_age=500)
+prod_db  =  dj_database_url.config()
 DATABASES['default'].update(prod_db)
 
