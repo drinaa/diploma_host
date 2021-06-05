@@ -1,1 +1,1 @@
-web: gunicorn diploma_host:app
+web: gunicorn diplomahost:app
