@@ -114,6 +114,8 @@ def add_diploma(request):
     cur_month = date.today().month
     if cur_month > 5:
         cur_year += 1
+        if cur_month < 9:
+            grade += 1
 
     name = request.POST["add_descrip"]
     level = request.POST["add_level"]
