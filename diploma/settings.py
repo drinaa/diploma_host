@@ -144,5 +144,5 @@ django_heroku.settings(locals())
 
 import dj_database_url
 prod_db  =  dj_database_url.config()
-DATABASES['default'].update(prod_db)
+DATABASES['default'].update(db_from_env)
 
