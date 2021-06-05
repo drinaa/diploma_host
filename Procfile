@@ -1,1 +1,1 @@
-web: gunicorn diplomahost:app
+web: gunicorn diplomahost.wsgi --log-file -
