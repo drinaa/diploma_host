@@ -139,8 +139,6 @@ LOGIN_URL = 'login_page'
 
 LOGOUT_REDIRECT_URL = 'index'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
 
 import dj_database_url
 prod_db  =  dj_database_url.config()
