@@ -27,7 +27,7 @@ SECRET_KEY = 'kjw^d3#8)=3+x(xld$t2&y28)g67y8zuetfnvvr*bs=q_3d7k7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'diploma.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'portfolio_db',
-        'USER': 'root',
-        'PASSWORD': 'vertrigo',
-        'HOST': 'localhost',
+        'NAME': 'heroku_c090b3388d887dc',
+        'USER': 'b6061909a7976f',
+        'PASSWORD': '3b1a4bf5',
+        'HOST': 'us-cdbr-east-04.cleardb.com',
     }
 }
 
@@ -139,10 +139,6 @@ LOGIN_URL = 'login_page'
 
 LOGOUT_REDIRECT_URL = 'index'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
 
-import dj_database_url
-prod_db  =  dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
+
 
