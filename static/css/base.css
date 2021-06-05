@@ -582,6 +582,10 @@ input[type=radio]:disabled + label:before {
     flex-direction: row;
 }
 
+.report_year_form{
+    margin-top: 10px;
+}
+
 #teacher_report_online select{
     font-size: 18px;
 }
