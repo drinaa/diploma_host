@@ -139,3 +139,11 @@ table {
 	color: red;
 }
 
+@media (min-height: 600px) and (max-width: 500px) {
+	.modal_reg {
+		width: 95%;
+		margin: 0;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+}
