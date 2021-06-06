@@ -536,6 +536,13 @@ h4 {
 		width: 95%;
 	}
 
+	.reg_button{
+		align-items: center;
+		height: 100px;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
 }
 #vk_groups,
 #vk_groups iframe {
