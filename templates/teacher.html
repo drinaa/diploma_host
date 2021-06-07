@@ -22,8 +22,8 @@
                             <option value="" selected>Все</option>
                             <script>
                                 let date = new Date;
-                                let year = date.getFullYear();
-                                for (let i = year - 11; i <= year; i++) {
+                                let year = date.getFullYear()+1;
+                                for (let i = year - 12; i <= year; i++) {
                                     let new_option = document.createElement('option');
                                     new_option.value = i.toString();
                                     new_option.innerHTML = i.toString();
@@ -50,7 +50,8 @@
                         </select></td>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="submit" value="Показать" id="class_button" class="select_nomin_button" name="show_portfolio_teach">
+                        <td colspan="3"><input type="submit" value="Показать" class="select_nomin_button" id="class_button"
+                                               name="show_portfolio_teach">
                     </tr>
                 </table>
             </form>
@@ -74,14 +75,18 @@
                     {% endfor %}
                 </table>
             </div>
-            <form action='create_report' method='POST' class="report_year_form" action="{% url 'create_report' %}">
-                {% csrf_token %}
+        </div>
+
+        <
+        <form method='POST' class="report_year_form" action="{% url 'create_report' %}">
+            {% csrf_token %}
+            <div class="create_nomin">
                 <span style="font-size: 20px; padding: 0px 5px;">Выберите год: &nbsp;</span>
                 <select name="report_year" id="report_year">
                     <script>
                         let date_j = new Date;
-                        let year_j = date_j.getFullYear();
-                        for (let j = year - 11; j <= year; j++) {
+                        let year_j = date_j.getFullYear()+1;
+                        for (let j = year - 12; j <= year; j++) {
                             let new_option = document.createElement('option');
                             new_option.value = j.toString();
                             new_option.innerHTML = j.toString();
@@ -90,8 +95,8 @@
                     </script>
                 </select>
                 <input type='submit' name='create_report' value='Создать список номинантов' class="select_nomin_button">
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 
 {% endblock %}
