@@ -155,8 +155,8 @@ def create_report(request):
         table.style = 'Table Grid'
         j = 0
         for nomin in list_nomination:
-            data = diplomas.objects.select_related("pupil").filter(year__contains=report_year, grade__contains=i, nomination__contains=nomin).values('year', 'nomination', 'pupil_id').annotate(points=Sum('point'))[:5]
-            table.cell(j, 0).text = nomin + ' номинация'
+            data = diplomas.objects.select_related("pupil").filter(year__contains=report_year, grade__contains=i, nomination__contains=nomin).values('year', 'nomination', 'pupil_id').annotate(points=Sum('point'))
+            data = data.order_by('-points')[:5]
             a = table.cell(j, 0).merge(table.cell(j,1))
             j += 1
             for elem in data:
