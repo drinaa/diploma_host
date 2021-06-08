@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^delete_diplomas$', views.delete_diplomas, name='delete_diplomas'),
     #url(r'^show_portfolio_teach$', views.show_portfolio_teach, name='show_portfolio_teach'),
     url(r'create_report$', views.create_report, name='create_report'),
+    url(r'create_report_pupil$', views.create_report_pupil, name='create_report_pupil'),
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('portfolio/base/', views.base, name='base'),

@@ -42,18 +42,18 @@
             <form id="form_select_nomin_pup" method="post" action="{% url 'show_nomin' %}">
                 {% csrf_token %}
                 <div id="show_nom">
-                        <p style="font-size: 22px;">Выбрать номинацию:</p>
-                        <div><span style="padding: 0px 5px;">&nbsp;</span><select name='nomination'
-                                                                                 style="font-size: 20px; font-family: 'Open Sans Condensed';">
-                            <option value="" selected>Все</option>
-                            <option value="интеллектуальная">Интеллектуальная</option>
-                            <option value="творческая">Творческая</option>
-                            <option value="спортивная">Спортивная</option>
-                        </select></div>
-                            <div>
-                                <input type="submit" value="Показать" class="select_nomin_button">
-                                <input type="hidden" name="next" value="{{ next }}"/>
-                            </div>
+                    <p style="font-size: 22px;">Выбрать номинацию:</p>
+                    <div><span style="padding: 0px 5px;">&nbsp;</span><select name='nomination'
+                                                                              style="font-size: 20px; font-family: 'Open Sans Condensed';">
+                        <option value="" selected>Все</option>
+                        <option value="интеллектуальная">Интеллектуальная</option>
+                        <option value="творческая">Творческая</option>
+                        <option value="спортивная">Спортивная</option>
+                    </select></div>
+                    <div>
+                        <input type="submit" value="Показать" class="select_nomin_button">
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                    </div>
                 </div>
             </form>
         </div>
@@ -85,8 +85,8 @@
                         <td style="border: none; font-size: 25px; color: #ff0000;">{{ sum_points }}</td>
                         <td style="border: none"></td>
                     </tr>
-                {% endif %}
-            </table>
+                    {% endif %}
+                    </table>
             {% if diplomas %}
                 <div style="display: flex; justify-content: center">
                     <input style="margin-top: 10px;" id='btn_del' type='submit' class="select_nomin_button"
@@ -94,6 +94,15 @@
                     </form>
                 </div>
             {% endif %}
+        {% if request.session.nomin != "" %}
+                    <form method='POST' class="report_year_form" name="report_pupil" action="{% url 'create_report_pupil' %}">
+                        {% csrf_token %}
+                        <div class="create_nomin">
+                            <input type='submit' name='create_report' value='Создать список грамот'
+                                   class="select_nomin_button">
+                        </div>
+                    </form>
+                {% endif %}
         </div>
     </div>
     <div class="popup-fade">
@@ -238,59 +247,59 @@
             </div>
         </div>
     </div>
-        <script src="https://yandex.st/jquery/2.1.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function ($) {
-                $('.popup_olimp_open').click(function () {
-                    $('.popup-fade').fadeIn();
-                    $('.popup_olimp').fadeIn();
-                    $('.popup_project').fadeOut(1);
-                    $('.popup_sport').fadeOut(1);
-                    $('.popup_tvor').fadeOut(1);
-                    return false;
-                });
-                $('.popup_project_open').click(function () {
-                    $('.popup-fade').fadeIn();
-                    $('.popup_olimp').fadeOut(1);
-                    $('.popup_project').fadeIn();
-                    $('.popup_sport').fadeOut(1);
-                    $('.popup_tvor').fadeOut(1);
-                    return false;
-                });
-                $('.popup_sport_open').click(function () {
-                    $('.popup-fade').fadeIn();
-                    $('.popup_olimp').fadeOut(1);
-                    $('.popup_project').fadeOut(1);
-                    $('.popup_sport').fadeIn();
-                    $('.popup_tvor').fadeOut(1);
-                    return false;
-                });
-                $('.popup_tvor_open').click(function () {
-                    $('.popup-fade').fadeIn();
-                    $('.popup_olimp').fadeOut(1);
-                    $('.popup_project').fadeOut(1);
-                    $('.popup_sport').fadeOut(1);
-                    $('.popup_tvor').fadeIn();
-                    return false;
-                });
-
-                $('.popup-close').click(function () {
-                    $(this).parents('.popup-fade').fadeOut();
-                    return false;
-                });
-
-                $(document).keydown(function (e) {
-                    if (e.keyCode === 27) {
-                        e.stopPropagation();
-                        $('.popup-fade').fadeOut();
-                    }
-                });
-
-                $('.popup-fade').click(function (e) {
-                    if ($(e.target).closest('.popup').length == 0) {
-                        $(this).fadeOut();
-                    }
-                });
+    <script src="https://yandex.st/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function ($) {
+            $('.popup_olimp_open').click(function () {
+                $('.popup-fade').fadeIn();
+                $('.popup_olimp').fadeIn();
+                $('.popup_project').fadeOut(1);
+                $('.popup_sport').fadeOut(1);
+                $('.popup_tvor').fadeOut(1);
+                return false;
             });
-        </script>
+            $('.popup_project_open').click(function () {
+                $('.popup-fade').fadeIn();
+                $('.popup_olimp').fadeOut(1);
+                $('.popup_project').fadeIn();
+                $('.popup_sport').fadeOut(1);
+                $('.popup_tvor').fadeOut(1);
+                return false;
+            });
+            $('.popup_sport_open').click(function () {
+                $('.popup-fade').fadeIn();
+                $('.popup_olimp').fadeOut(1);
+                $('.popup_project').fadeOut(1);
+                $('.popup_sport').fadeIn();
+                $('.popup_tvor').fadeOut(1);
+                return false;
+            });
+            $('.popup_tvor_open').click(function () {
+                $('.popup-fade').fadeIn();
+                $('.popup_olimp').fadeOut(1);
+                $('.popup_project').fadeOut(1);
+                $('.popup_sport').fadeOut(1);
+                $('.popup_tvor').fadeIn();
+                return false;
+            });
+
+            $('.popup-close').click(function () {
+                $(this).parents('.popup-fade').fadeOut();
+                return false;
+            });
+
+            $(document).keydown(function (e) {
+                if (e.keyCode === 27) {
+                    e.stopPropagation();
+                    $('.popup-fade').fadeOut();
+                }
+            });
+
+            $('.popup-fade').click(function (e) {
+                if ($(e.target).closest('.popup').length == 0) {
+                    $(this).fadeOut();
+                }
+            });
+        });
+    </script>
 {% endblock %}
